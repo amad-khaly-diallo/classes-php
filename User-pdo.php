@@ -9,9 +9,7 @@ class Userpdo {
     private $pdo;
     private $connected = false;
 
-    // ======================
     // Constructeur
-    // ======================
     public function __construct($host, $dbname, $user, $pass) {
         try {
             $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
@@ -22,9 +20,7 @@ class Userpdo {
         }
     }
 
-    // ======================
     // Register
-    // ======================
     public function register($login, $password, $email, $firstname, $lastname) {
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
         $sql = "INSERT INTO users (login, password, email, firstname, lastname) 
@@ -49,9 +45,7 @@ class Userpdo {
         return $this->getAllInfos();
     }
 
-    // ======================
     // Connect
-    // ======================
     public function connect($login, $password) {
         $sql = "SELECT * FROM users WHERE login = :login";
         $stmt = $this->pdo->prepare($sql);
@@ -71,9 +65,7 @@ class Userpdo {
         return false;
     }
 
-    // ======================
     // Disconnect
-    // ======================
     public function disconnect() {
         $this->id = null;
         $this->login = null;
@@ -84,9 +76,7 @@ class Userpdo {
         $this->connected = false;
     }
 
-    // ======================
     // Delete
-    // ======================
     public function delete() {
         if ($this->id) {
             $sql = "DELETE FROM users WHERE id = :id";
@@ -96,9 +86,7 @@ class Userpdo {
         }
     }
 
-    // ======================
     // Update
-    // ======================
     public function update($login, $password, $email, $firstname, $lastname) {
         if (!$this->id) return false;
 
@@ -125,16 +113,12 @@ class Userpdo {
         return true;
     }
 
-    // ======================
     // isConnected
-    // ======================
     public function isConnected() {
         return $this->connected;
     }
 
-    // ======================
     // Get all infos
-    // ======================
     public function getAllInfos() {
         return [
             'id' => $this->id,
@@ -145,9 +129,7 @@ class Userpdo {
         ];
     }
 
-    // ======================
     // Getters simples
-    // ======================
     public function getLogin() { return $this->login; }
     public function getEmail() { return $this->email; }
     public function getFirstname() { return $this->firstname; }
